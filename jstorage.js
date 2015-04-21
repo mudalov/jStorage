@@ -47,6 +47,9 @@
         /* detect a dollar object or create one if not found */
         $ = window.jQuery || window.$ || (window.$ = {}),
 
+        /* To implement a work around for 
+        *  https://connect.microsoft.com/IE/feedback/details/811546/ie11-localstorage-events-fire-twice-or-not-at-all-in-iframes
+        *  issue, as 'onstorage' event doesn't work in child iframes, embedded to window from separate domain  */
         _isIE11 = !!navigator.userAgent.match(/Trident.*rv\:11\./),
 
         /* check for a JSON handling support */
