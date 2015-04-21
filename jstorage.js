@@ -47,6 +47,8 @@
         /* detect a dollar object or create one if not found */
         $ = window.jQuery || window.$ || (window.$ = {}),
 
+        _isIE11 = !!navigator.userAgent.match(/Trident.*rv\:11\./),
+
         /* check for a JSON handling support */
         JSON = {
             parse: window.JSON && (window.JSON.parse || window.JSON.decode) ||
@@ -298,14 +300,14 @@
      * Sets up a storage change observer
      */
     function _setupObserver() {
-        if (_backend == 'localStorage' || _backend == 'globalStorage') {
+        if (_isIE11 || _backend == 'userDataBehavior') {
+            setInterval(_storageObserver, 1000);
+        } else if (_backend == 'localStorage' || _backend == 'globalStorage') {
             if ('addEventListener' in window) {
                 window.addEventListener('storage', _storageObserver, false);
             } else {
                 document.attachEvent('onstorage', _storageObserver);
             }
-        } else if (_backend == 'userDataBehavior') {
-            setInterval(_storageObserver, 1000);
         }
     }
 
